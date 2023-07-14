@@ -5,6 +5,7 @@ namespace GardCame.Models
     public class Deck
     {
         protected Stack<Card> deck { get; set; } = new Stack<Card>();
+        protected Stack<Card> UsedCards { get; set; } = new Stack<Card>();
 
         public virtual Stack<Card> GetCards()
         {
@@ -20,9 +21,15 @@ namespace GardCame.Models
 
         public Card RemoveCard()
         {
-            if(deck.Count() > 0)
-                return deck.Pop();
-            return null;
+            if (deck.Count() > 0)
+            {
+                deck = new Stack<Card>(UsedCards);
+                UsedCards = new Stack<Card>();
+            }
+
+            Card removedCard =  deck.Pop();
+            UsedCards.Push(removedCard);
+            return removedCard;
         }
 
         public Stack<Card> Shuffle()
