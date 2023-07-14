@@ -242,14 +242,16 @@ namespace GardCame.GameLoop
             Board.LocalPlayer.TakeDamage(1);
             Board.RefreshLife();
 
-            //if(Board.LocalPlayer.Health < 1)
-            if (Program.Network.IsServer)
+            if (!Board.LocalPlayer.isDead && Board.LocalPlayer.Health < 1)
             {
-                Board.LocalPlayer.isDead = true;
-            }
-            else
-            {
-                Program.Network.Send($"{nameof(KillPlayer)}|{Board.LocalPlayer.Id};");
+                if (Program.Network.IsServer)
+                {
+                    Board.LocalPlayer.isDead = true;
+                }
+                else
+                {
+                    Program.Network.Send($"{nameof(KillPlayer)}|{Board.LocalPlayer.Id};");
+                }
             }
             //Quit = true;
         }
