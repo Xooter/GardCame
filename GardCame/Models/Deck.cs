@@ -21,7 +21,7 @@ namespace GardCame.Models
 
         public Card RemoveCard()
         {
-            if (deck.Count() > 0)
+            if (deck.Count() == 0)
             {
                 deck = new Stack<Card>(UsedCards);
                 UsedCards = new Stack<Card>();
